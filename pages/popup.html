@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Popup</title>
+  <link rel="stylesheet" type="text/css" href="../styles/popup.css">
+  <style type="text/css">
+  	body {
+  		min-width: 300px;
+  	}
+
+  	.hidden {
+  		display: none;
+  	}
+  </style>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-item">
+    	
+    	<div class="getApi"> 
+      <input type="text" id="apiKey" placeholder="&nbsp;">
+      <label for="searchName" data-label="Enter API key"></label>
+    	</div>
+    	<div class="searchApi hidden">
+      <input type="text" id="searchName" placeholder="&nbsp;">
+      <label for="searchName" data-label="Search Movie / TV Show"></label>
+    		
+    	</div>
+    </div>
+  </div>
+
+  <span class="hidden" id="keyErrorMessage">Not a valid API key, get it from <a href="https://developers.themoviedb.org">TMDB website</a></span>
+  <script src="../scripts/popup.js"></script>
+</body>
+
+</html>
