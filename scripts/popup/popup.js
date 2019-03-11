@@ -1,20 +1,30 @@
 // Enable chromereload by uncommenting this line:
 // import 'chromereload/devonly'
 
-import * as requestUtils from './http-request-utils';
-
 let key;
 let errorMessageSpan;
 
 const urls = {
   api: {
     tmdb: {
-      search: (term) => `https://api.themoviedb.org/3/find/${term}?external_source=imdb_id&language=en-US&api_key=${key}`,
+      isValidApiKey: (apiKey) => `https://api.themoviedb.org/3/find/nothing?external_source=imdb_id&language=en-US&api_key=${apiKey}`,
       multiSearch: (term) => `https://api.themoviedb.org/3/search/multi?include_adult=false&page=1&query=${encodeURIComponent(term)}&language=en-US&api_key=${key}`,
       getMovieById: (movieId) => `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=${key}&append_to_response=external_ids`,
       getTvShowById: (showId) => `https://api.themoviedb.org/3/tv/${showId}?language=en-US&api_key=${key}&append_to_response=external_ids`,
     }
   }
+}
+
+function sendTMDBRequest(fn, url) {
+  return requestUtils.get(urls.api.tmdb.getMovieById(id), {Authorization: 'Bearer ' + accessToken})
+}
+
+function isHavingApiKey() {
+  return !!localStorage.getItem('apiKey');
+}
+
+function TmdbIconClickHandlerNoApiKey() {
+  updateUrl('https://developers.themoviedb.org', false, true)
 }
 
 document.body.onload = () => {
@@ -24,27 +34,38 @@ document.body.onload = () => {
     let apiKeyIn = document.getElementById('apiKey');
     apiKeyIn.onkeydown = setApiKeyEvent;
     apiKeyIn.focus();
+
+    let tmdbIcon = document.getElementById('tmdbIcon');
+    tmdbIcon.onclick = TmdbIconClickHandlerNoApiKey;
   } else {
     Array.from(document.getElementsByClassName('searchApi')).forEach((item) => {
-        item.className = 'searchApi';
-      }
-    );
+      item.className = 'searchApi';
+    });
 
     Array.from(document.getElementsByClassName('getApi')).forEach((item) => {
-        item.className = 'getApi hidden';
-      }
-    );
+      item.className = 'getApi hidden';
+    });
+
+    let tmdbIcon = document.getElementById('tmdbIcon');
+    tmdbIcon.onclick = searchNameByClick;
   }
   if (!searchNameIn) {
     searchNameIn = document.getElementById('searchName');
+  }
+
+  let errorMsgLink;
+
+  errorMsgLink = document.getElementById('tmdbUrl');
+
+  if (errorMsgLink) {
+    errorMsgLink.onclick = TmdbIconClickHandlerNoApiKey;
   }
 
   if (searchNameIn) {
     searchNameIn.onkeydown = searchNameKeyEvent;
     searchNameIn.focus();
   }
-}
-;
+};
 
 function setApiKeyEvent(event) {
   if (!isEnter(event)) {
@@ -53,7 +74,7 @@ function setApiKeyEvent(event) {
 
   const apiKey = event.target.value;
 
-  requestUtils.get(urls.api.tmdb.search('nothing'))
+  requestUtils.get(urls.api.tmdb.isValidApiKey(apiKey))
     .then((res) => {
       if (res.status_code === 7) {
         throw {
@@ -68,7 +89,13 @@ function setApiKeyEvent(event) {
       localStorage.setItem('apiKey', apiKey);
       key = apiKey;
 
-      errorMessageSpan.className = 'hidden';
+      if (!errorMessageSpan) {
+        errorMessageSpan = document.getElementById('keyErrorMessage');
+      }
+
+      if (errorMessageSpan) {
+        errorMessageSpan.className = 'hidden';
+      }
 
       Array.from(document.getElementsByClassName('searchApi')).forEach((item) => {
           item.className = 'searchApi';
@@ -79,6 +106,9 @@ function setApiKeyEvent(event) {
           item.className = 'getApi hidden';
         }
       );
+
+      let tmdbIcon = document.getElementById('tmdbIcon');
+      tmdbIcon.onclick = searchNameByClick;
     })
     .catch((error) => {
       console.error(error);
@@ -99,18 +129,30 @@ function setApiKeyEvent(event) {
 
 // TODO - Set the input to be in focus
 
-// TODO - Check why the console.log not showing in the DevTools
-console.log(`Init`);
-
-// TODO - Check why this function not get called
-async function searchNameKeyEvent(event) {
-
+function searchNameKeyEvent(event) {
   if (isEnter(event)) {
-    search(await getIdByName(event.target.value));
+    searchName(event.target.value);
     return false;
   }
-
   return true;
+}
+
+function searchNameByClick() {
+  if (!searchNameIn) {
+    searchNameIn = document.getElementById('searchName');
+  }
+
+  if (!searchNameIn) {
+    console.error('search name input didn\'t found');
+    return true;
+  }
+
+  searchName(searchNameIn.value);
+  return false;
+}
+
+async function searchName(name) {
+  search(await getIdByName(name));
 }
 
 function getIdByName(name) {
@@ -127,17 +169,19 @@ let searchBtn = getSearchBtn();
 let searchNameIn = document.getElementById('searchName');
 
 function search(imdbId) {
+  updateUrl(`/torrents.php?imdb=${imdbId}`);
+}
 
-  // opens a communication between scripts
-  var port = chrome.runtime.connect();
+function updateUrl(url, relative = true, newTab = false) {
+  if (newTab) {
+    chrome.tabs.create({url: url, active: true});
+    return;
+  }
 
-  // sends a message throw the communication port
-  port.postMessage({
-    'from': 'popup',
-    'url': `/torrents.php?imdb=${imdbId}`,
-    // window.location = '/torrents.php?imdb=tt4016466';
-    'relative': true
-  });
+  const changePageUrlCode = `window.location${relative ? '' : '.href'} = '${url}'`;
+
+  chrome.tabs.executeScript({code: changePageUrlCode});
+  window.close();
 }
 
 function getSearchBtn() {

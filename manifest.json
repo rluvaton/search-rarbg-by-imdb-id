@@ -5,8 +5,11 @@
   "version": "0.0.2",
   "manifest_version": 2,
   "default_locale": "en",
-  "permissions": ["tabs",
-    "https://rarbgto.org/*", "https://rarbgtor.org/*", "*://api.themoviedb.org/*"
+  "permissions": [
+    "tabs",
+    "https://rarbgto.org/*",
+    "https://rarbgtor.org/*",
+    "*://api.themoviedb.org/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -14,7 +17,7 @@
   },
   "background": {
     "scripts": [
-      "scripts/background.js"
+      "scripts/background/background.js"
     ]
   },
   "page_action": {

@@ -1,4 +1,4 @@
-function sendRequest(method, url, jsonBody, responseAsJson = true) {
+function sendRequest(method, url, jsonBody, headers, responseAsJson = true) {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
@@ -41,16 +41,18 @@ function sendRequest(method, url, jsonBody, responseAsJson = true) {
 
     xhr.open(method, url);
 
+    if (headers) {
+      Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value))
+    }
+
     xhr.send(JSON.stringify(jsonBody || {}));
   });
 }
 
 const requestUtils = {
   send: sendRequest,
-  get: (url, responseAsJson = true) => sendRequest('GET', url, {}, responseAsJson),
-  post: (url, body, responseAsJson = true) => sendRequest('POST', url, body, responseAsJson),
-  put: (url, body, responseAsJson = true) => sendRequest('PUT', url, body, responseAsJson),
-  delete: (url, body, responseAsJson = true) => sendRequest('DELETE', url, body, responseAsJson),
+  get: (url, headers = {}, responseAsJson = true) => sendRequest('GET', url, {}, headers, responseAsJson),
+  post: (url, body, headers = {}, responseAsJson = true) => sendRequest('POST', url, body, headers, responseAsJson),
+  put: (url, body, headers = {}, responseAsJson = true) => sendRequest('PUT', url, body, headers, responseAsJson),
+  delete: (url, body, headers = {}, responseAsJson = true) => sendRequest('DELETE', url, body, headers, responseAsJson),
 };
-
-module.exports = requestUtils;

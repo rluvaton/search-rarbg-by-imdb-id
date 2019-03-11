@@ -9,7 +9,13 @@ body {
 }
 
 .container {
-  margin: 25px 15%;
+  margin: 25px 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.tmdb-icon {
+  height: 30px;
 }
 
 p {
@@ -18,13 +24,17 @@ p {
   text-align: center;
   color: #ccc;
 }
+
 p b {
   color: #48cfad;
 }
 
 .form-item {
   position: relative;
+  width: 244px;
+  margin-right: 15px;
 }
+
 .form-item div:not(.hidden) input[type="text"] {
   display: block;
   width: 100%;
@@ -38,25 +48,30 @@ p b {
   border-bottom: 2px solid #ddd;
   padding: 6px 12px 6px 0;
 }
+
 .form-item div:not(.hidden) input[type="text"]:focus, .form-item div:not(.hidden) input[type="text"]:active {
   outline: none;
   box-shadow: none;
   color: #48cfad;
 }
+
 .form-item div:not(.hidden) input[type="text"]:focus ~ label:before {
   font-size: 12px;
   bottom: 34px;
   color: #48cfad;
 }
+
 .form-item div:not(.hidden) input[type="text"]:focus ~ label:after {
   background-repeat: no-repeat;
   background-size: 1000% 1000%;
   background-image: radial-gradient(circle, #48cfad 10%, rgba(0, 0, 0, 0) 11%) !important;
 }
+
 .form-item div:not(.hidden) input[type="text"]:not(:placeholder-shown) ~ label:before {
   font-size: 12px;
   bottom: 34px;
 }
+
 .form-item div:not(.hidden) label:before {
   content: attr(data-label);
   display: block;
@@ -65,6 +80,7 @@ p b {
   bottom: 6px;
   transition: all .15s ease-in-out;
 }
+
 .form-item div:not(.hidden) label:after {
   content: '';
   position: absolute;
