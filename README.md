@@ -1,5 +1,18 @@
 # Search RARBG Torrents by IMDB ID
 
-> Powered by 
+<img src="./images/powered-by-rectangle-green-dcada16968ed648d5eb3b36bbcfdd8cdf804f723dcca775c8f2bf4cea025aad6.svg" data-canonical-src="./images/powered-by-rectangle-green-dcada16968ed648d5eb3b36bbcfdd8cdf804f723dcca775c8f2bf4cea025aad6.svg" alt="Powered By TMDB" height="100" />
 
-![Powered By TMDB](https://www.themoviedb.org/assets/2/v4/logos/408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99.png)
+## Installation
+1. Download the latest release
+2. Navigate to `chrome://extensions`
+3. Make sure _Developer mode_ is checked
+4. Click Load unpacked extension
+5. Select the folder release folder
+
+## Development
+1. Run: `git clone https://github.com/rluvaton/search-rarbg-by-imdb-id.git`
+2. Build the project: `cd search-rarbg-by-imdb-id && npm i`
+3. Navigate to `chrome://extensions`
+4. Make sure _Developer mode_ is checked
+5. Click Load unpacked extension
+6. Select the folder `search-rarbg-by-imdb-id`
