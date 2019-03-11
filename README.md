@@ -11,8 +11,7 @@
 
 ## Development
 1. Run: `git clone https://github.com/rluvaton/search-rarbg-by-imdb-id.git`
-2. Build the project: `cd search-rarbg-by-imdb-id && npm i`
-3. Navigate to `chrome://extensions`
-4. Make sure _Developer mode_ is checked
-5. Click Load unpacked extension
-6. Select the folder `search-rarbg-by-imdb-id`
+2. Navigate to `chrome://extensions`
+3. Make sure _Developer mode_ is checked
+4. Click Load unpacked extension
+5. Select the folder `search-rarbg-by-imdb-id`

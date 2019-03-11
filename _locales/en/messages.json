@@ -1,18 +1,18 @@
 {
   "appName": {
-    "message": "Search IMDB ID by Name",
+    "message": "Search RARBG Torrents by IMDB ID",
     "description": "The name of the application"
   },
   "appShortName": {
-    "message": "search-torrent-by-imdb-name",
+    "message": "search-rarbg-by-name",
     "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
   },
   "appDescription": {
-    "message": "Search Torrents by IMDB name and get their ID",
+    "message": "Search RARBG Torrents by searching for the IMDB ID for the wanted TV show/movie ",
     "description": "The description of the application"
   },
   "browserActionTitle": {
-    "message": "Get IMDB ID by Name",
+    "message": "Search RARBG Torrents by IMDB ID",
     "description": "The title of the browser action button"
   }
 }
