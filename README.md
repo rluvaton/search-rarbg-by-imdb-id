@@ -1,6 +1,6 @@
 # Search RARBG Torrents by IMDB ID
 
-![Powered By TMDB](./images/powered-by-rectangle-green-dcada16968ed648d5eb3b36bbcfdd8cdf804f723dcca775c8f2bf4cea025aad6.svg)
+<img src="./images/powered-by-rectangle-green-dcada16968ed648d5eb3b36bbcfdd8cdf804f723dcca775c8f2bf4cea025aad6.svg" data-canonical-src="./images/powered-by-rectangle-green-dcada16968ed648d5eb3b36bbcfdd8cdf804f723dcca775c8f2bf4cea025aad6.svg" alt="Powered By TMDB" height="100" />
 
 ## Installation
 1. Download the latest release
